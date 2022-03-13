@@ -19,12 +19,57 @@ namespace OdeToFood.Web.Controllers
         // GET: Restaurant
         public ActionResult Index()
         {
+            return View(repo.GetAll());
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var model = repo.GetById(id);
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
             return View();
         }
 
-        public ActionResult GetRestaurants()
+        [HttpPost]
+        public ActionResult Create(RESTAURANT rest)
         {
-            return View(repo.GetAll());
+            repo.CreateRestaurant(rest);
+    
+            return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            repo.DeleteResturant(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var model = repo.GetById(id); 
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(RESTAURANT rest)
+        {
+            repo.EditRestaurant(rest);
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

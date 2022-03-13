@@ -19,5 +19,33 @@ namespace OdeToFood.Data
         {
             return db.RESTAURANTS.ToList();
         }
+
+        public RESTAURANT GetById(int id)
+        {
+            var model = db.RESTAURANTS.Find(id);
+            return model;
+        }
+
+        public void CreateRestaurant(RESTAURANT restaurant)
+        {
+            db.RESTAURANTS.Add(restaurant);
+            db.SaveChanges();
+        }
+
+        public void DeleteResturant(int id)
+        {
+            var model = GetById(id);
+            db.RESTAURANTS.Remove(model);
+            db.SaveChanges();
+        }
+
+        public void EditRestaurant(RESTAURANT re)
+        {
+            RESTAURANT restaurant = new RESTAURANT();
+            restaurant = GetById(re.ID);
+            restaurant.NAME = re.NAME;
+            db.SaveChanges();
+        }
+
     }
 }
